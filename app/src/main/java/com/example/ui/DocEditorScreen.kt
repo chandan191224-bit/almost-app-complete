@@ -8511,6 +8511,14 @@ fun WordDocumentEditor(
                                 var splitOffset by remember { mutableIntStateOf(-1) }
                                 var mergeBackOffset by remember { mutableIntStateOf(-1) }
                                 var mergeBackLocked by remember { mutableStateOf(false) }
+                                var textLayoutResult by remember { mutableStateOf<androidx.compose.ui.text.TextLayoutResult?>(null) }
+                                
+                                val cleanContent = remember(draftContent) {
+                                    draftContent.replace(Regex("[\\s\\u200B\\u000C]"), "")
+                                }
+                                LaunchedEffect(cleanContent) {
+                                    mergeBackLocked = false
+                                }
                                 
                                 var pageTextFieldValue by remember {
                                     val initialText = if (pageContent.isEmpty() && pageIndex > 0) "\u200B" else pageContent
@@ -8632,6 +8640,44 @@ fun WordDocumentEditor(
                                         lastPushedText = syncedText
                                     }
                                 }
+
+                                LaunchedEffect(
+                                    textFieldHeightPx,
+                                    textLayoutResult,
+                                    mergeBackLocked,
+                                    splitOffset,
+                                    mergeBackOffset,
+                                    pageIndex,
+                                    pages.size
+                                ) {
+                                    val result = textLayoutResult
+                                    if (result != null && textFieldHeightPx > 0) {
+                                        if (result.size.height > (textFieldHeightPx - 50)) {
+                                            val availableHeight = (textFieldHeightPx - 50).toFloat()
+                                            val line = (0 until result.lineCount).findLast { result.getLineBottom(it) <= availableHeight }
+                                            if (line != null && line < result.lineCount - 1 && line > 0 && splitOffset == -1) {
+                                                val tentativeSplit = result.getLineEnd(line, visibleEnd = false)
+                                                if (tentativeSplit < pageTextFieldValue.text.length) {
+                                                    splitOffset = tentativeSplit
+                                                } else {
+                                                    splitOffset = result.getLineEnd(line - 1, visibleEnd = false)
+                                                }
+                                            } else if (line == 0 && splitOffset == -1 && result.lineCount > 1) {
+                                                val tentativeSplit = result.getLineEnd(0, visibleEnd = false)
+                                                if (tentativeSplit < pageTextFieldValue.text.length) {
+                                                    splitOffset = tentativeSplit
+                                                }
+                                            }
+                                        }
+                                        if (splitOffset == -1 && mergeBackOffset == -1 && !mergeBackLocked && pageIndex + 1 < pages.size && pages[pageIndex + 1].isNotEmpty() && result.lineCount > 0) {
+                                            val usedHeight = result.getLineBottom(result.lineCount - 1)
+                                            val availableHeight = (textFieldHeightPx - 50).toFloat()
+                                            if (usedHeight < availableHeight - 40) {
+                                                mergeBackOffset = 1
+                                            }
+                                        }
+                                    }
+                                }
                                 
                                 BasicTextField(
                                     value = pageTextFieldValue,
@@ -8721,30 +8767,7 @@ fun WordDocumentEditor(
                                         }
                                     },
                                     onTextLayout = { result: androidx.compose.ui.text.TextLayoutResult ->
-                                        if (textFieldHeightPx > 0 && result.size.height > (textFieldHeightPx - 50)) {
-                                            val availableHeight = (textFieldHeightPx - 50).toFloat()
-                                            val line = (0 until result.lineCount).findLast { result.getLineBottom(it) <= availableHeight }
-                                            if (line != null && line < result.lineCount - 1 && line > 0 && splitOffset == -1) {
-                                                val tentativeSplit = result.getLineEnd(line, visibleEnd = false)
-                                                if (tentativeSplit < pageTextFieldValue.text.length) {
-                                                    splitOffset = tentativeSplit
-                                                } else {
-                                                    splitOffset = result.getLineEnd(line - 1, visibleEnd = false)
-                                                }
-                                            } else if (line == 0 && splitOffset == -1 && result.lineCount > 1) {
-                                                val tentativeSplit = result.getLineEnd(0, visibleEnd = false)
-                                                if (tentativeSplit < pageTextFieldValue.text.length) {
-                                                    splitOffset = tentativeSplit
-                                                }
-                                            }
-                                        }
-                                        if (textFieldHeightPx > 0 && splitOffset == -1 && mergeBackOffset == -1 && !mergeBackLocked && pageIndex + 1 < pages.size && pages[pageIndex + 1].isNotEmpty() && result.lineCount > 0) {
-                                            val usedHeight = result.getLineBottom(result.lineCount - 1)
-                                            val availableHeight = (textFieldHeightPx - 50).toFloat()
-                                            if (usedHeight < availableHeight - 40) {
-                                                mergeBackOffset = 1
-                                            }
-                                        }
+                                        textLayoutResult = result
                                     },
                                     cursorBrush = androidx.compose.ui.graphics.SolidColor(paperTextColor),
                                     textStyle = MaterialTheme.typography.bodyLarge.copy(
