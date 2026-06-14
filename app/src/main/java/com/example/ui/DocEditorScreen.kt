@@ -8832,7 +8832,6 @@ fun WordDocumentEditor(
                             // Footer
                             val shouldShowFooter = (showHeaderFooterOnFirstPage || pageIndex > 0) && (footerText.isNotEmpty() || (shouldShowPageNum && pageNumberPosition != null && (pageNumberPosition.startsWith("Bottom") || pageNumberPosition.contains("Margin"))))
                             if (shouldShowFooter) {
-                                Spacer(modifier = Modifier.weight(1f))
                                 androidx.compose.material3.HorizontalDivider(
                                     modifier = Modifier.padding(vertical = 2.dp),
                                     color = DocWordColor.copy(alpha = 0.1f)
@@ -8911,8 +8910,6 @@ fun WordDocumentEditor(
                                         )
                                     }
                                 }
-                            } else {
-                                Spacer(modifier = Modifier.weight(1f))
                             }
                         }
                         
