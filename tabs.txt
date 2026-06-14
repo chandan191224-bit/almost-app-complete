@@ -1,0 +1,65 @@
+        RibbonTool(id = "insert_table", title = "Table", description = "Insert Table", icon = Icons.Outlined.TableChart, category = "Tables", tab = "Insert", actionId = "insert_table"),
+        // References Tab Tools removed
+                showToast("Real index of headings compiled to Table of Contents!")
+    var selectedTab by remember { mutableStateOf(0) } // 0 = Standard, 1 = Custom
+                // MS Office Style Navigation Tabs (Standard vs Custom)
+                TabRow(
+                    selectedTabIndex = selectedTab,
+                    Tab(
+                        selected = selectedTab == 0,
+                        onClick = { selectedTab = 0 },
+                    Tab(
+                        selected = selectedTab == 1,
+                        onClick = { selectedTab = 1 },
+                if (selectedTab == 0) {
+        var activeRibbonTab by remember { mutableStateOf("Home") }
+        var showInsertTableDialog by remember { mutableStateOf(false) }
+        var selectedTableId by remember { mutableStateOf<String?>(null) }
+                showInsertTableDialog = true
+                            if (activeRibbonTab == "AI") {
+                                    (tool.tab.equals(activeRibbonTab, ignoreCase = true) || ribbonSearchQuery.isNotEmpty()) &&
+                                            showInsertTableDialog = true
+                                    if (activeRibbonTab.equals("Home", ignoreCase = true) && ribbonSearchQuery.isEmpty()) {
+                    val ribbonTabs = listOf(
+                        ribbonTabs.forEach { (tabName, icon, tag) ->
+                            val isSelected = activeRibbonTab == tabName && isRibbonExpanded
+                                        if (activeRibbonTab == tabName && isRibbonExpanded) {
+                                            activeRibbonTab = tabName
+            if (showInsertTableDialog) {
+                    onDismissRequest = { showInsertTableDialog = false },
+                            Text("Insert Table", fontWeight = FontWeight.SemiBold)
+                                Text("Table Styling Style", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = if (isSystemInDarkTheme()) Color.White else Color.Black)
+                                DocTableRepository.addTable(
+                                    table = DocTable(
+                                android.widget.Toast.makeText(context, "Table created on Page ${targetIndex + 1}!", android.widget.Toast.LENGTH_SHORT).show()
+                                showInsertTableDialog = false
+                        TextButton(onClick = { showInsertTableDialog = false }) {
+    var activeTab by remember { mutableStateOf("home") } // "home", "files", "shared", "settings"
+    BackHandler(enabled = activeTab != "home" && !isSidebarExpanded) {
+        activeTab = "home"
+    var filesCategoryTab by remember { mutableStateOf("all") }
+                        activeTab = "files"
+                        if (it.isNotEmpty() && activeTab != "files") {
+                            activeTab = "files"
+                        .clickable { activeTab = "settings" },
+        // --- 2. Interactive Workspace Tabs ---
+            when (activeTab) {
+                                            onClick = { activeTab = "shared" }
+                                                onClick = { activeTab = "files" },
+                                        onClick = { activeTab = "files" },
+                                    onClick = { activeTab = "shared" },
+                                val selected = filesCategoryTab == type
+                                            filesCategoryTab = type
+                    val selected = activeTab == tabId
+                        onClick = { activeTab = tabId },
+    var selectedTableId by remember { mutableStateOf<String?>(null) }
+                                    selectedTableId = null
+                        // Table Overlay
+                        val pageTables = DocTableRepository.getTables(docId).filter { it.pageIndex == pageIndex }
+                        pageTables.forEach { docTable ->
+                            DocTableOverlay(
+                                docTable = docTable,
+                                isSelected = selectedTableId == docTable.id,
+                                    selectedTableId = docTable.id
+                                onDeselect = { selectedTableId = null },
+                                    selectedTableId = null

@@ -1,0 +1,85 @@
+120:fun getDefaultTextStyles(): List<DocTextStyle> = listOf(
+130:fun applyStyleAttributes(docId: Int, style: DocTextStyle, start: Int, end: Int) {
+153:    fun getSpans(docId: Int): androidx.compose.runtime.snapshots.SnapshotStateList<DocFormatSpan> {
+157:    fun removeSpansRange(docId: Int, start: Int, end: Int) {
+178:    fun hasSpan(docId: Int, type: String, start: Int, end: Int): Boolean {
+183:    fun removeSpanTypeRange(docId: Int, type: String, start: Int, end: Int) {
+210:    fun applySpan(docId: Int, type: String, value: String, start: Int, end: Int) {
+255:    fun shiftSpans(docId: Int, changeStart: Int, deleted: Int, inserted: Int) {
+275:    fun moveSpanRange(docId: Int, fromStart: Int, fromEnd: Int, toStart: Int) {
+325:fun DocEditorScreen(
+458:fun SidebarExplorer(
+759:fun DocumentTile(
+893:fun RibbonToolCard(
+982:fun EditingButton(
+1032:fun getRibbonTools(
+1215:fun executeRibbonAction(
+1274:    fun showToast(msg: String) {
+2129:fun RibbonGroupContainer(
+2179:fun RibbonIconButton(
+2256:fun ColorPickerDialog(
+2270:    fun updateFromHex(hex: String) {
+2281:    fun updateFromRgb(r: Int, g: Int, b: Int) {
+2589:fun BulletStyleDialog(
+2633:fun NumberFormatDialog(
+2673:fun LineSpacingDialog(
+2724:fun BordersDialog(
+2832:fun RibbonDropdown(
+2929:fun ExportButton(
+3021:    fun getDimensions(format: String, customDimensions: Pair<Float, Float>, isLandscape: Boolean): Pair<Dp, Dp> {
+3037:fun PageRuler(
+3074:fun WorkspacePane(
+3231:        fun showUndoRedoFeedback(msg: String) {
+6365:fun EmptyWorkspaceState(
+6995:fun FeaturedDocBentoCard(
+7101:fun CollaborationBentoCard(
+7190:fun StatsBentoSquare(
+7250:fun RoomDbStorageBentoSquare(
+7321:fun SmartTemplatesBentoCard(
+7387:fun TemplateChipItem(
+7410:fun TemplateCard(
+7469:fun WorkspaceMenuBar(
+7605:    override fun filter(text: AnnotatedString): TransformedText {
+7614:    private fun filterUnsafe(text: AnnotatedString): TransformedText {
+7734:fun toRoman(number: Int): String {
+7748:fun toAlphabetic(number: Int): String {
+7759:fun formatPageNumber(pageNumber: Int, format: String, totalPages: Int = 1): String {
+7780:fun getParagraphRange(text: String, pos: Int): IntRange {
+7788:fun getParagraphRangesInRange(text: String, rangeStart: Int, rangeEnd: Int): List<IntRange> {
+7823:fun getParagraphText(text: String, pos: Int): String {
+7828:fun replaceParagraphText(text: String, pos: Int, newPara: String): String {
+7837:fun detectListPrefix(line: String): Pair<String?, String?> {
+7856:fun removeListPrefix(line: String): String {
+7883:fun applyBulletToPara(text: String, pos: Int, bulletChar: String): String {
+7893:fun removeBulletFromPara(text: String, pos: Int): String {
+7899:fun applyNumberToPara(text: String, pos: Int, numFormat: String, number: Int): String {
+7915:fun renumberDocument(text: String, numFormat: String): String {
+7950:fun getThemeProperties(name: String): OfficeThemeProperties {
+7997:fun Modifier.applyThemeEffect(effect: String, shape: androidx.compose.ui.graphics.Shape = RoundedCornerShape(0.dp)): Modifier {
+8039:fun WordDocumentEditor(
+8988:fun SpreadsheetEditor(
+9176:fun SlidePresentationWorkspace(
+9459:fun getSlideThemeBg(theme: String): Color {
+9471:fun TextStyleCompose(theme: String, fontSize: androidx.compose.ui.unit.TextUnit, fontWeight: FontWeight, align: TextAlign = TextAlign.Start): androidx.compose.ui.text.TextStyle {
+9482:fun FullscreenPresentationView(
+9599:fun CreateDocumentDialog(
+9709:fun TypeSelectionRow(
+9782:fun CustomMarginsDialog(
+9964:fun CustomSizeDialog(
+10082:fun PageNumberFormatDialog(
+10223:fun HeaderFooterDialog(
+10395:fun DocPictureOverlay(
+11189:    override fun createOutline(
+11205:fun PictureFormattingPanel(
+11838:fun ShapePreviewItem(type: String, label: String, onClick: () -> Unit) {
+12026:fun CustomWatermarkDialog(
+12116:fun CustomBordersDialog(
+12274:fun CommentsSidebar(
+12461:fun RevisionsSidebar(
+12608:fun SpellingCheckDialog(
+12763:fun ThesaurusDialog(
+12835:fun WordCountDialog(
+12893:fun AccessibilityCheckDialog(
+12957:fun TranslateDialog(
+13056:fun LanguageSetDialog(
+13108:fun ReadAloudPlayerControls(
